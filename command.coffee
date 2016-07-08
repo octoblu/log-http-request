@@ -4,6 +4,7 @@ class Command
   constructor: ->
     @serverOptions =
       port:           process.env.PORT || 80
+      disableLogging: process.DISABLE_LOGGING == 'true'
 
   fatal: (error) =>
     console.error error.stack

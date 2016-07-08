@@ -1,6 +1,6 @@
 {
   "name": "log-http-request",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Put some description here",
   "keywords": [],
   "homepage": "https://github.com/octoblu/log-http-request",
@@ -24,7 +24,6 @@
     "mocha": "^2.3.4",
     "mocha-istanbul": "^0.2.0",
     "request": "^2.66.0",
-    "@octoblu/shmock": "^0.7.2",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
   },
