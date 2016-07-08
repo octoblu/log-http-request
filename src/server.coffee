@@ -6,12 +6,14 @@ errorHandler       = require 'errorhandler'
 meshbluHealthcheck = require 'express-meshblu-healthcheck'
 packageVersion     = require 'express-package-version'
 sendError          = require 'express-send-error'
+JobLogger          = require 'job-logger'
 
 Router                = require './router'
 LogHttpRequestService = require './services/log-http-request-service'
 
 class Server
-  constructor: ({@disableLogging, @port})->
+  constructor: ({@disableLogging, @port, client, jobLogQueue})->
+    @jobLogger = new JobLogger {client, jobLogQueue, indexPrefix: 'metrics-log-http-request', type: 'http'}
 
   address: =>
     @server.address()
@@ -29,7 +31,7 @@ class Server
 
     app.options '*', cors()
 
-    logHttpRequestService = new LogHttpRequestService
+    logHttpRequestService = new LogHttpRequestService {@jobLogger}
     router = new Router {logHttpRequestService}
 
     router.route app

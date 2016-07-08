@@ -1,27 +1,35 @@
-Server        = require './src/server'
+Redis  = require 'ioredis'
+Server = require './src/server'
 
 class Command
   constructor: ->
-    @serverOptions =
-      port:           process.env.PORT || 80
-      disableLogging: process.DISABLE_LOGGING == 'true'
+    throw new Error 'Missing required environment: JOB_LOGGER_QUEUE' unless process.env.JOB_LOGGER_QUEUE
+
+    @client         = new Redis(process.env.JOB_LOGGER_REDIS_URI || 'redis://localhost:6379')
+    @disableLogging = process.env.DISABLE_LOGGING == 'true'
+    @jobLogQueue    = process.env.JOB_LOGGER_QUEUE
+    @port           = process.env.PORT || 80
+
+    process.on 'SIGINT', @_onSIGINT
+    process.on 'SIGTERM', @_onSIGTERM
+    @client.on 'error', @fatal
 
   fatal: (error) =>
     console.error error.stack
     process.exit 1
 
   run: =>
-    @server = new Server @serverOptions
+    @server = new Server {@client, @disableLogging, @jobLogQueue, @port}
     @server.run (error) =>
       return @fatal error if error?
 
       {address, port} = @server.address()
       console.log "Server listening on #{address}:#{port}"
 
-    process.on 'SIGINT', @_onSIGINT
-    process.on 'SIGTERM', @_onSIGTERM
 
   stop: =>
+    process.exit 0 unless @server?
+
     @server.stop (error) =>
       return @fatal @error if error?
       process.exit 0
