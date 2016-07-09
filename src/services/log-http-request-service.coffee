@@ -7,6 +7,7 @@ class LogHttpRequestService
 
   formatMessage: ({uuid}) =>
     return {
+      date: new Date()
       request:
         metadata:
           fromUuid: uuid
