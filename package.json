@@ -42,7 +42,7 @@
     "express-send-error": "^1.1.0",
     "ioredis": "^2.2.0",
     "job-logger": "^4.2.0",
-    "lodash": "^4.13.1",
+    "lodash": "^4.16.5",
     "morgan": "^1.6.1"
   },
   "peerDependencies": {},
