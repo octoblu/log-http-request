@@ -28,7 +28,7 @@
     "request": "^2.66.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
-    "uuid": "^2.0.2"
+    "uuid": "^3.0.0"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
