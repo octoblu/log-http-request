@@ -19,7 +19,7 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
+    "chai": "^4.0.0",
     "chai-subset": "^1.2.2",
     "fakeredis": "^1.0.3",
     "istanbul": "^0.4.0",
